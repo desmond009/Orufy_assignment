@@ -39,7 +39,7 @@ exports.createProduct = async (req, res) => {
 
         let images = [];
         if (req.files) {
-            images = req.files.map(file => `/uploads/${file.filename}`);
+            images = req.files.map(file => file.path); // Cloudinary returns full URL in path
         }
 
         const product = await Product.create({
@@ -95,7 +95,7 @@ exports.updateProduct = async (req, res) => {
 
         // Handle new images if uploaded
         if (req.files && req.files.length > 0) {
-            const newImages = req.files.map(file => `/uploads/${file.filename}`);
+            const newImages = req.files.map(file => file.path); // Cloudinary returns full URL in path
             product.images = [...product.images, ...newImages];
         }
 

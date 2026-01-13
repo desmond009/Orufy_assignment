@@ -106,7 +106,7 @@ const Home = () => {
                     {products.map(p => (
                         <div key={p._id} className={styles.productCard}>
                             <img
-                                src={p.images[0] ? `http://localhost:5001${p.images[0]}` : 'https://via.placeholder.com/300x180'}
+                                src={p.images[0]?.startsWith('http') ? p.images[0] : (p.images[0] ? `http://localhost:5001${p.images[0]}` : 'https://via.placeholder.com/300x180')}
                                 alt={p.name}
                                 className={styles.productImage}
                             />
