@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import { FiLogOut, FiUser, FiSearch, FiChevronDown } from 'react-icons/fi';
+import { FiHome, FiSettings, FiUser, FiSearch, FiLogOut, FiChevronDown, FiMenu } from 'react-icons/fi';
 import Sidebar from '../components/Sidebar';
 import { useAuth } from '../context/AuthContext';
 import styles from './Dashboard.module.css';
@@ -10,6 +10,7 @@ const Dashboard = () => {
     const { logout, user } = useAuth();
     const [showDropdown, setShowDropdown] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const dropdownRef = useRef(null);
 
     // Determine title based on path
@@ -37,12 +38,25 @@ const Dashboard = () => {
         logout();
     };
 
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
+
     return (
         <div className={styles.layout}>
-            <Sidebar />
+            <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+
+            {/* Mobile Overlay */}
+            {isSidebarOpen && (
+                <div className={styles.overlay} onClick={() => setIsSidebarOpen(false)} />
+            )}
+
             <div className={styles.main}>
                 <header className={styles.header}>
                     <div className={styles.breadcrumb}>
+                        <button className={styles.menuButton} onClick={toggleSidebar}>
+                            <FiMenu size={24} />
+                        </button>
                         <FiSearch className={styles.searchIcon} />
                         {getTitle()}
                     </div>
