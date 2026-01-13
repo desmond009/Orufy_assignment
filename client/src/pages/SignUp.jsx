@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import styles from './Login.module.css'; // Reusing Login styles
+import authBackground from '../assets/auth-background.png';
 
 const SignUp = () => {
     const [name, setName] = useState('');
@@ -23,13 +24,7 @@ const SignUp = () => {
     return (
         <div className={styles.container}>
             <div className={styles.leftPanel}>
-                <img src="/src/assets/runner.png" alt="Productr" className={styles.logo} />
-                <div className={styles.card}>
-                    <div className={styles.cardInner}>
-                        <img src="/src/assets/runner.png" alt="Runner" className={styles.runnerImage} />
-                        <h2 className={styles.cardText}>Uplist your product to market</h2>
-                    </div>
-                </div>
+                <img src={authBackground} alt="Background" className={styles.leftPanelBackground} />
             </div>
             <div className={styles.rightPanel}>
                 <h3 className={styles.title}>Create your Productr Account</h3>

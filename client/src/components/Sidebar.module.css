@@ -21,6 +21,11 @@
     padding-left: 1rem;
 }
 
+.logo img {
+    height: 40px;
+    object-fit: contain;
+}
+
 .logo span {
     color: #F09819;
     /* Orange */

@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { FiHome, FiShoppingBag, FiSearch } from 'react-icons/fi';
 import styles from './Sidebar.module.css';
-import logo from '../assets/runner.png';
+import logo from '../assets/productr-logo.png';
 
 const Sidebar = () => {
     return (
