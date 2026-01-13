@@ -1,0 +1,49 @@
+.layout {
+    display: flex;
+    min-height: 100vh;
+    background: #F8F9FD;
+}
+
+.main {
+    margin-left: 250px;
+    /* Sidebar width */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    height: 60px;
+    background: white;
+    /* Or gradient as in image? */
+    /* Image shows a soft gradient header or just white with shadows */
+    background: linear-gradient(to right, #FFF5F2, #F8F9FD);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+}
+
+.breadcrumb {
+    font-weight: 600;
+    color: #444;
+}
+
+.userProfile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #ccc;
+    overflow: hidden;
+}
+
+.content {
+    padding: 2rem;
+    flex: 1;
+}
