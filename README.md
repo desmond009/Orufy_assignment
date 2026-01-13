@@ -81,7 +81,7 @@ npm install
 Create a `.env` file in the `server` directory with the following variables:
 
 ```env
-PORT=5000
+PORT=5001
 MONGO_URI=mongodb://localhost:27017/productr
 JWT_SECRET=your_super_secret_jwt_key_here
 ```
@@ -94,7 +94,7 @@ Start the backend server:
 npm run dev
 ```
 
-The server will run on `http://localhost:5000`
+The server will run on `http://localhost:5001`
 
 ### 3. Frontend Setup
 
@@ -108,7 +108,7 @@ npm install
 Create a `.env` file in the `client` directory (optional):
 
 ```env
-VITE_API_URL=http://localhost:5000
+VITE_API_BASE_URL=http://localhost:5001/api
 ```
 
 Start the frontend development server:
@@ -226,7 +226,7 @@ For production deployment, consider using PM2 or similar process managers.
 
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `PORT` | Server port | `5000` |
+| `PORT` | Server port | `5001` |
 | `MONGO_URI` | MongoDB connection string | `mongodb://localhost:27017/productr` |
 | `JWT_SECRET` | Secret key for JWT | `your_secret_key` |
 
@@ -234,7 +234,7 @@ For production deployment, consider using PM2 or similar process managers.
 
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `VITE_API_URL` | Backend API URL | `http://localhost:5000` |
+| `VITE_API_BASE_URL` | Backend API URL | `http://localhost:5001/api` |
 
 ## 🤝 Contributing
 
