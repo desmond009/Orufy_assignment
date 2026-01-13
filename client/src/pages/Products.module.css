@@ -1,0 +1,202 @@
+.productsContainer {
+    padding: 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1B2131;
+}
+
+.addButton {
+    background: #0044CC;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+}
+
+.addButton:hover {
+    background: #0033AA;
+}
+
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    color: #2C3E50;
+}
+
+.emptyIcon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #1B2131;
+    position: relative;
+}
+
+.emptyTitle {
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.emptyDescription {
+    color: #888;
+    font-size: 0.9rem;
+    text-align: center;
+    max-width: 300px;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+
+.productsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+.productCard {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.productCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.productImage {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    background: #F5F5F5;
+}
+
+.productContent {
+    padding: 1.2rem;
+}
+
+.productName {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1B2131;
+    margin-bottom: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.productDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.detailRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+}
+
+.detailLabel {
+    color: #666;
+}
+
+.detailValue {
+    color: #1B2131;
+    font-weight: 500;
+    text-align: right;
+}
+
+.productActions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #F0F0F0;
+}
+
+.actionButton {
+    flex: 1;
+    padding: 0.6rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.publishButton {
+    background: #0044CC;
+    color: white;
+}
+
+.publishButton:hover {
+    background: #0033AA;
+}
+
+.unpublishButton {
+    background: #28A745;
+    color: white;
+}
+
+.unpublishButton:hover {
+    background: #218838;
+}
+
+.editButton {
+    background: white;
+    color: #666;
+    border: 1px solid #DDD;
+}
+
+.editButton:hover {
+    background: #F8F9FA;
+    border-color: #CCC;
+}
+
+.deleteButton {
+    background: white;
+    color: #DC3545;
+    border: 1px solid #DC3545;
+}
+
+.deleteButton:hover {
+    background: #DC3545;
+    color: white;
+}
+
+.iconButton {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

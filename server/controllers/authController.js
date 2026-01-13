@@ -112,6 +112,7 @@ exports.verifyOtp = async (req, res) => {
         res.json({
             _id: user.id,
             email: user.email,
+            name: user.name,
             token: generateToken(user._id),
         });
     } catch (error) {

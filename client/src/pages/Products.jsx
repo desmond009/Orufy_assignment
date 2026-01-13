@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { FiGrid, FiPlus, FiEdit2, FiTrash2 } from 'react-icons/fi';
+import { FiGrid, FiPlus, FiEdit2, FiTrash2, FiCopy } from 'react-icons/fi';
 import api from '../services/api';
 import AddProductModal from '../components/AddProductModal';
 import EditProductModal from '../components/EditProductModal';
+import styles from './Products.module.css';
 
 const Products = () => {
     const [products, setProducts] = useState([]);
@@ -41,121 +42,116 @@ const Products = () => {
         }
     };
 
+    const togglePublish = async (product) => {
+        try {
+            const formData = new FormData();
+            formData.append('isPublished', !product.isPublished);
+
+            await api.put(`/products/${product._id}`, formData);
+            fetchProducts();
+        } catch (error) {
+            console.error(error);
+            alert('Failed to update product status');
+        }
+    };
+
     return (
-        <div>
+        <div className={styles.productsContainer}>
             {/* Header Action if products exist */}
             {products.length > 0 && (
-                <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
+                <div className={styles.header}>
+                    <h2 className={styles.title}>Products</h2>
                     <button
                         onClick={() => setShowModal(true)}
-                        style={{
-                            background: '#0044CC',
-                            color: 'white',
-                            border: 'none',
-                            padding: '0.5rem 1rem',
-                            borderRadius: '6px',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '0.5rem'
-                        }}
+                        className={styles.addButton}
                     >
-                        <FiPlus /> Add Product
+                        <FiPlus /> Add Products
                     </button>
                 </div>
             )}
 
             {products.length === 0 ? (
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    height: '60vh',
-                    color: '#2C3E50'
-                }}>
-                    <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#1B2131' }}>
+                <div className={styles.emptyState}>
+                    <div className={styles.emptyIcon}>
                         <FiGrid />
                         <span style={{ fontSize: '1.5rem', verticalAlign: 'super', marginLeft: '-10px' }}>+</span>
                     </div>
-                    <h3 style={{ marginBottom: '0.5rem' }}>Feels a little empty over here...</h3>
-                    <p style={{ color: '#888', fontSize: '0.9rem', textAlign: 'center', maxWidth: '300px', marginBottom: '2rem' }}>
+                    <h3 className={styles.emptyTitle}>Feels a little empty over here...</h3>
+                    <p className={styles.emptyDescription}>
                         You can create products without connecting store so you can add products to store anytime.
                     </p>
                     <button
                         onClick={() => setShowModal(true)}
-                        style={{
-                            background: '#0044CC', // Blue from screenshot
-                            color: 'white',
-                            border: 'none',
-                            padding: '0.8rem 2rem',
-                            borderRadius: '6px',
-                            fontWeight: '600',
-                            cursor: 'pointer'
-                        }}
+                        className={styles.addButton}
                     >
                         Add your Products
                     </button>
                 </div>
             ) : (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
+                <div className={styles.productsGrid}>
                     {products.map(p => (
-                        <div key={p._id} style={{ background: 'white', padding: '1rem', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)', position: 'relative' }}>
+                        <div key={p._id} className={styles.productCard}>
                             <img
-                                src={p.images[0] ? `http://localhost:5000${p.images[0]}` : 'https://via.placeholder.com/150'}
+                                src={p.images[0] ? `http://localhost:5000${p.images[0]}` : 'https://via.placeholder.com/300x180'}
                                 alt={p.name}
-                                style={{
-                                    width: '100%',
-                                    height: '150px',
-                                    objectFit: 'cover',
-                                    borderRadius: '4px',
-                                    background: '#f0f0f0'
-                                }}
+                                className={styles.productImage}
                             />
-                            <h4 style={{ marginTop: '1rem', fontSize: '1rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.name}</h4>
-                            <p style={{ color: '#888', fontSize: '0.8rem' }}>{p.type}</p>
-                            <div style={{ marginTop: '0.5rem', fontWeight: 'bold' }}>${p.sellingPrice}</div>
+                            <div className={styles.productContent}>
+                                <h4 className={styles.productName}>{p.name}</h4>
 
-                            {/* Action buttons */}
-                            <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
-                                <button
-                                    onClick={() => handleEdit(p)}
-                                    style={{
-                                        flex: 1,
-                                        padding: '0.5rem',
-                                        background: '#0044CC',
-                                        color: 'white',
-                                        border: 'none',
-                                        borderRadius: '4px',
-                                        cursor: 'pointer',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        gap: '0.3rem',
-                                        fontSize: '0.85rem'
-                                    }}
-                                >
-                                    <FiEdit2 size={14} /> Edit
-                                </button>
-                                <button
-                                    onClick={() => handleDelete(p._id, p.name)}
-                                    style={{
-                                        flex: 1,
-                                        padding: '0.5rem',
-                                        background: '#dc3545',
-                                        color: 'white',
-                                        border: 'none',
-                                        borderRadius: '4px',
-                                        cursor: 'pointer',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        gap: '0.3rem',
-                                        fontSize: '0.85rem'
-                                    }}
-                                >
-                                    <FiTrash2 size={14} /> Delete
-                                </button>
+                                <div className={styles.productDetails}>
+                                    <div className={styles.detailRow}>
+                                        <span className={styles.detailLabel}>Product type -</span>
+                                        <span className={styles.detailValue}>{p.type}</span>
+                                    </div>
+                                    <div className={styles.detailRow}>
+                                        <span className={styles.detailLabel}>Quantity Stock -</span>
+                                        <span className={styles.detailValue}>{p.stock}</span>
+                                    </div>
+                                    <div className={styles.detailRow}>
+                                        <span className={styles.detailLabel}>MRP -</span>
+                                        <span className={styles.detailValue}>₹ {p.mrp}</span>
+                                    </div>
+                                    <div className={styles.detailRow}>
+                                        <span className={styles.detailLabel}>Selling Price -</span>
+                                        <span className={styles.detailValue}>₹ {p.sellingPrice}</span>
+                                    </div>
+                                    <div className={styles.detailRow}>
+                                        <span className={styles.detailLabel}>Brand Name -</span>
+                                        <span className={styles.detailValue}>{p.brand}</span>
+                                    </div>
+                                    <div className={styles.detailRow}>
+                                        <span className={styles.detailLabel}>Total Number of images -</span>
+                                        <span className={styles.detailValue}>{p.images?.length || 0}</span>
+                                    </div>
+                                    <div className={styles.detailRow}>
+                                        <span className={styles.detailLabel}>Exchange Eligibility -</span>
+                                        <span className={styles.detailValue}>{p.exchangeEligible ? 'YES' : 'NO'}</span>
+                                    </div>
+                                </div>
+
+                                {/* Action buttons */}
+                                <div className={styles.productActions}>
+                                    <button
+                                        onClick={() => togglePublish(p)}
+                                        className={`${styles.actionButton} ${p.isPublished ? styles.unpublishButton : styles.publishButton}`}
+                                    >
+                                        {p.isPublished ? 'Unpublish' : 'Publish'}
+                                    </button>
+                                    <button
+                                        onClick={() => handleEdit(p)}
+                                        className={`${styles.actionButton} ${styles.editButton}`}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        onClick={() => handleDelete(p._id, p.name)}
+                                        className={`${styles.actionButton} ${styles.iconButton} ${styles.deleteButton}`}
+                                        title="Delete"
+                                    >
+                                        <FiTrash2 size={16} />
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     ))}
@@ -167,7 +163,6 @@ const Products = () => {
                     onClose={() => setShowModal(false)}
                     onProductAdded={() => {
                         fetchProducts();
-                        // Optional: Close modal or keep based on UX? Usually keep closed.
                     }}
                 />
             )}

@@ -33,8 +33,16 @@ export const AuthProvider = ({ children }) => {
     const verifyOtp = async (email, otp) => {
         const { data } = await api.post('/auth/verify', { email, otp });
         localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify({ email: data.email, _id: data._id }));
-        setUser({ email: data.email, _id: data._id });
+        localStorage.setItem('user', JSON.stringify({
+            email: data.email,
+            _id: data._id,
+            name: data.name
+        }));
+        setUser({
+            email: data.email,
+            _id: data._id,
+            name: data.name
+        });
         navigate('/dashboard');
     };
 

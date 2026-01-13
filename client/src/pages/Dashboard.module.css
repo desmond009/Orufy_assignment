@@ -13,11 +13,9 @@
 }
 
 .header {
-    height: 60px;
+    height: 70px;
     background: white;
-    /* Or gradient as in image? */
-    /* Image shows a soft gradient header or just white with shadows */
-    background: linear-gradient(to right, #FFF5F2, #F8F9FD);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -26,21 +24,155 @@
 
 .breadcrumb {
     font-weight: 600;
-    color: #444;
+    color: #1B2131;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.searchIcon {
+    color: #888;
 }
 
 .userProfile {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
+}
+
+.searchBar {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.searchInputIcon {
+    position: absolute;
+    left: 12px;
+    color: #999;
+    pointer-events: none;
+}
+
+.searchInput {
+    padding: 0.6rem 0.8rem 0.6rem 2.5rem;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    width: 280px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.searchInput:focus {
+    border-color: #0044CC;
+}
+
+.searchInput::placeholder {
+    color: #999;
+}
+
+.userInfoWrapper {
+    position: relative;
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.5rem 1rem;
+    background: #F8F9FD;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.userInfo:hover {
+    background: #F0F2F8;
 }
 
 .avatar {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    background: #ccc;
-    overflow: hidden;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+}
+
+.userDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.userName {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1B2131;
+}
+
+.userEmail {
+    font-size: 0.75rem;
+    color: #666;
+}
+
+.dropdownIcon {
+    color: #666;
+    transition: transform 0.2s;
+    margin-left: 0.3rem;
+}
+
+.dropdownIconOpen {
+    transform: rotate(180deg);
+}
+
+.dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 0.5rem;
+    min-width: 180px;
+    z-index: 1000;
+    animation: dropdownFadeIn 0.2s ease-out;
+}
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.logoutButton {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.7rem 1rem;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #DC3545;
+    transition: background 0.2s;
+}
+
+.logoutButton:hover {
+    background: #FFF5F5;
 }
 
 .content {

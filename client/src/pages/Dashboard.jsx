@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import { FiLogOut } from 'react-icons/fi';
+import { FiLogOut, FiUser, FiSearch, FiChevronDown } from 'react-icons/fi';
 import Sidebar from '../components/Sidebar';
 import { useAuth } from '../context/AuthContext';
 import styles from './Dashboard.module.css';
 
 const Dashboard = () => {
     const location = useLocation();
-    const { logout } = useAuth();
+    const { logout, user } = useAuth();
+    const [showDropdown, setShowDropdown] = useState(false);
+    const dropdownRef = useRef(null);
 
     // Determine title based on path
     const getTitle = () => {
@@ -15,36 +17,71 @@ const Dashboard = () => {
         return 'Home';
     };
 
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setShowDropdown(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    const handleLogout = () => {
+        setShowDropdown(false);
+        logout();
+    };
+
     return (
         <div className={styles.layout}>
             <Sidebar />
             <div className={styles.main}>
                 <header className={styles.header}>
-                    <div className={styles.breadcrumb}>{getTitle()}</div>
+                    <div className={styles.breadcrumb}>
+                        <FiSearch className={styles.searchIcon} />
+                        {getTitle()}
+                    </div>
                     <div className={styles.userProfile}>
-                        {/* Search bar could be here too per design? No sidebar has search */}
-                        <div style={{ fontSize: '0.9rem', color: '#666' }}>Search Services, Products</div>
-                        <div className={styles.avatar}>
-                            <img src="https://via.placeholder.com/32" alt="User" />
+                        <div className={styles.searchBar}>
+                            <FiSearch className={styles.searchInputIcon} />
+                            <input
+                                type="text"
+                                placeholder="Search Services, Products"
+                                className={styles.searchInput}
+                            />
                         </div>
-                        <button
-                            onClick={logout}
-                            style={{
-                                background: '#dc3545',
-                                color: 'white',
-                                border: 'none',
-                                padding: '0.5rem 1rem',
-                                borderRadius: '6px',
-                                cursor: 'pointer',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '0.5rem',
-                                fontSize: '0.9rem',
-                                fontWeight: '500'
-                            }}
-                        >
-                            <FiLogOut /> Logout
-                        </button>
+                        <div className={styles.userInfoWrapper} ref={dropdownRef}>
+                            <div
+                                className={styles.userInfo}
+                                onClick={() => setShowDropdown(!showDropdown)}
+                            >
+                                <div className={styles.avatar}>
+                                    <FiUser size={18} />
+                                </div>
+                                <div className={styles.userDetails}>
+                                    <div className={styles.userName}>{user?.name || user?.email || 'User'}</div>
+                                    <div className={styles.userEmail}>{user?.email}</div>
+                                </div>
+                                <FiChevronDown
+                                    className={`${styles.dropdownIcon} ${showDropdown ? styles.dropdownIconOpen : ''}`}
+                                />
+                            </div>
+                            {showDropdown && (
+                                <div className={styles.dropdown}>
+                                    <button
+                                        className={styles.logoutButton}
+                                        onClick={handleLogout}
+                                    >
+                                        <FiLogOut size={16} />
+                                        Logout
+                                    </button>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </header>
                 <div className={styles.content}>
