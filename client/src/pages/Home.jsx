@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import api from '../services/api';
 import { FiGrid, FiEdit2, FiTrash2 } from 'react-icons/fi';
 import EditProductModal from '../components/EditProductModal';
 import styles from './Products.module.css'; // Reuse product card styles
 
 const Home = () => {
+    const { searchTerm } = useOutletContext();
     const [activeTab, setActiveTab] = useState('published');
     const [products, setProducts] = useState([]);
     const [showEditModal, setShowEditModal] = useState(false);
@@ -53,6 +55,10 @@ const Home = () => {
         }
     };
 
+    const filteredProducts = products.filter(p =>
+        p.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <div className={styles.productsContainer}>
             <div style={{
@@ -90,20 +96,20 @@ const Home = () => {
             </div>
 
             {/* Content */}
-            {products.length === 0 ? (
+            {filteredProducts.length === 0 ? (
                 <div className={styles.emptyState}>
                     <div className={styles.emptyIcon}>
                         <FiGrid />
                         <span style={{ fontSize: '1.5rem', verticalAlign: 'super', marginLeft: '-10px' }}>+</span>
                     </div>
-                    <h3 className={styles.emptyTitle}>No {activeTab === 'published' ? 'Published' : 'Unpublished'} Products</h3>
+                    <h3 className={styles.emptyTitle}>No {activeTab === 'published' ? 'Published' : 'Unpublished'} Products found</h3>
                     <p className={styles.emptyDescription}>
                         Your {activeTab === 'published' ? 'Published' : 'Unpublished'} Products will appear here.
                     </p>
                 </div>
             ) : (
                 <div className={styles.productsGrid}>
-                    {products.map(p => (
+                    {filteredProducts.map(p => (
                         <div key={p._id} className={styles.productCard}>
                             <img
                                 src={p.images[0]?.startsWith('http') ? p.images[0] : (p.images[0] ? `http://localhost:5001${p.images[0]}` : 'https://via.placeholder.com/300x180')}

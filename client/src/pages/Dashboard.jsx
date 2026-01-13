@@ -9,6 +9,7 @@ const Dashboard = () => {
     const location = useLocation();
     const { logout, user } = useAuth();
     const [showDropdown, setShowDropdown] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
     const dropdownRef = useRef(null);
 
     // Determine title based on path
@@ -52,6 +53,8 @@ const Dashboard = () => {
                                 type="text"
                                 placeholder="Search Services, Products"
                                 className={styles.searchInput}
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
                             />
                         </div>
                         <div className={styles.userInfoWrapper} ref={dropdownRef}>
@@ -85,7 +88,7 @@ const Dashboard = () => {
                     </div>
                 </header>
                 <div className={styles.content}>
-                    <Outlet />
+                    <Outlet context={{ searchTerm }} />
                 </div>
             </div>
         </div>
